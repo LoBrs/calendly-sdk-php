@@ -1,0 +1,31 @@
+{
+  "name": "lobrs/calendly-sdk-php",
+  "description": "Calendly API SDK PHP",
+  "license": ["MIT"],
+  "authors": [
+    {
+      "name": "Loïc Brisset",
+      "email": "loic@boreal-business.net"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "^7.4",
+    "league/oauth2-client": "^2.6",
+    "ext-json": "*",
+    "php": ">=7.4"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.5",
+    "mockery/mockery": "^1.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "Calendly\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Calendly\\Test\\": "tests/"
+    }
+  }
+}
