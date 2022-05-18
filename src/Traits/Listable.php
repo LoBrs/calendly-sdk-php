@@ -28,9 +28,9 @@ trait Listable
     public static function paginate(array $options = []): PaginatedList {
         $response = Calendly::getClient()->request(static::getResourceURI(), "GET", $options);
         if (isset($response["collection"])) {
-            return static::pagination($response);
+            return static::pagination($response, $options);
         }
-        return new PaginatedList([]);
+        return new PaginatedList([], $options);
     }
 
     protected static function getResourceURI() {

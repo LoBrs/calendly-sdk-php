@@ -59,8 +59,8 @@ abstract class BaseModel
      * @param array $response
      * @return PaginatedList<static>
      */
-    public static function pagination(array $response): PaginatedList {
+    public static function pagination(array $response, array $current_options = []): PaginatedList {
         $response["collection"] = static::collection($response["collection"]);
-        return new PaginatedList($response);
+        return new PaginatedList($response, $current_options, static::class);
     }
 }

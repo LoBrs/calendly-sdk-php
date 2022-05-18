@@ -80,6 +80,6 @@ class CalendlyResourceTest extends TestCase
         $this->assertNotEmpty($data->getCollection());
         $this->assertInstanceOf(Event::class, $data->getCollection()[0]);
         $this->assertEquals(1, $data->countResults());
-        $this->assertEquals("https://api.calendly.com/scheduled_events?count=1&page_token=sNjq4TvMDfUHEl7zHRR0k0E1PCEJWvdi", $data->getNextPage());
+        $this->assertEquals("https://api.calendly.com/scheduled_events?count=1&page_token=sNjq4TvMDfUHEl7zHRR0k0E1PCEJWvdi", $data->getNextPageURL());
     }
 }

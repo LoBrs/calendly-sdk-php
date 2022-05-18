@@ -59,7 +59,7 @@ final class CalendlyApi
     }
 
     public function getEventTypes(array $options): Utils\PaginatedList {
-        return EventType::pagination($options);
+        return EventType::paginate($options);
     }
 
 }
