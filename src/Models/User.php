@@ -35,11 +35,11 @@ class User extends BaseModel
     }
 
     /**
-     * @param $options
+     * @param array $options
      * @return Event[]
      * @throws \Exception
      */
-    public function getEvents($options = []) {
+    public function getScheduledEvents(array $options = []) {
         return Event::getList(array_merge([
             "organization" => $this->current_organization,
             "user"         => $this->uri,
