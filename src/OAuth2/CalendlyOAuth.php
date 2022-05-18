@@ -1,8 +1,8 @@
 <?php
 
-namespace Calendly\OAuth2;
+namespace LoBrs\Calendly\OAuth2;
 
-use Calendly\OAuth2\Provider\CalendlyOAuthProvider;
+use LoBrs\Calendly\OAuth2\Provider\CalendlyOAuthProvider;
 
 class CalendlyOAuth
 {

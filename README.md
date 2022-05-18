@@ -9,8 +9,8 @@ composer require lobrs/calendly-sdk-php
 ### Usage
 
 ```
-\Calendly\Facades\Calendly::setToken($token);
-$user = \Calendly\Facades\Calendly::me();
+\LoBrs\Calendly\Calendly::setToken($token);
+$user = \LoBrs\Calendly\Calendly::me();
 ```
 
 ### Examples

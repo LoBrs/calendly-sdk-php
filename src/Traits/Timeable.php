@@ -1,6 +1,6 @@
 <?php
 
-namespace Calendly\Traits;
+namespace LoBrs\Calendly\Traits;
 
 /**
  * @property $created_at

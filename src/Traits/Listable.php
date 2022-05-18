@@ -1,8 +1,8 @@
 <?php
 
-namespace Calendly\Traits;
+namespace LoBrs\Calendly\Traits;
 
-use Calendly\Facades\Calendly;
+use LoBrs\Calendly\Calendly;
 
 trait Listable
 {

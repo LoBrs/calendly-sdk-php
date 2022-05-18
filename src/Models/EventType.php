@@ -1,9 +1,9 @@
 <?php
 
-namespace Calendly\Models;
+namespace LoBrs\Calendly\Models;
 
-use Calendly\Traits\Listable;
-use Calendly\Traits\Timeable;
+use LoBrs\Calendly\Traits\Listable;
+use LoBrs\Calendly\Traits\Timeable;
 
 /**
  * @property $uri

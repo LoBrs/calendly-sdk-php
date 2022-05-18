@@ -1,13 +1,13 @@
 <?php
 
-namespace Calendly;
+namespace LoBrs\Calendly;
 
-use Calendly\Models\EventType;
-use Calendly\Models\User;
+use LoBrs\Calendly\Models\EventType;
+use LoBrs\Calendly\Models\User;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
 
-class CalendlySDK
+final class CalendlyApi
 {
     const API_URL = "https://api.calendly.com";
     private Client $client;

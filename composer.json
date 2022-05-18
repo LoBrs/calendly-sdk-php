@@ -20,12 +20,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Calendly\\": "src/"
+      "LoBrs\\Calendly\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Calendly\\Test\\": "tests/"
+      "LoBrs\\Calendly\\Test\\": "tests/"
     }
   }
 }

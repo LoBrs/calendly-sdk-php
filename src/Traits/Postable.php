@@ -1,9 +1,9 @@
 <?php
 
-namespace Calendly\Traits;
+namespace LoBrs\Calendly\Traits;
 
-use Calendly\Facades\Calendly;
-use Calendly\Models\BaseModel;
+use LoBrs\Calendly\Calendly;
+use LoBrs\Calendly\Models\BaseModel;
 
 trait Postable
 {

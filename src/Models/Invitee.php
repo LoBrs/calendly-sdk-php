@@ -1,8 +1,8 @@
 <?php
 
-namespace Calendly\Models;
+namespace LoBrs\Calendly\Models;
 
-use Calendly\Traits\ChildListable;
+use LoBrs\Calendly\Traits\ChildListable;
 
 class Invitee extends BaseModel
 {

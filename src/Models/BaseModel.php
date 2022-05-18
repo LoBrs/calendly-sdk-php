@@ -1,8 +1,8 @@
 <?php
 
-namespace Calendly\Models;
+namespace LoBrs\Calendly\Models;
 
-use Calendly\Facades\Calendly;
+use LoBrs\Calendly\Calendly;
 
 abstract class BaseModel
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Calendly\Test;
+namespace LoBrs\Calendly\Test;
 
-use Calendly\Models\User;
+use LoBrs\Calendly\Models\User;
 use PHPUnit\Framework\TestCase;
 
 class CalendlyResourceTest extends TestCase

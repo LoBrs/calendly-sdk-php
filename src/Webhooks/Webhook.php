@@ -1,11 +1,11 @@
 <?php
 
-namespace Calendly\Webhooks;
+namespace LoBrs\Calendly\Webhooks;
 
-use Calendly\Models\BaseModel;
-use Calendly\Traits\Listable;
-use Calendly\Traits\Postable;
-use Calendly\Traits\Timeable;
+use LoBrs\Calendly\Models\BaseModel;
+use LoBrs\Calendly\Traits\Listable;
+use LoBrs\Calendly\Traits\Postable;
+use LoBrs\Calendly\Traits\Timeable;
 
 /**
  * @property string $uri
