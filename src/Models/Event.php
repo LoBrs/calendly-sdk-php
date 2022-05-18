@@ -46,6 +46,10 @@ class Event extends BaseModel
         return Guest::collection((array)$this->event_guests);
     }
 
+    public function getEventTypeId(): string {
+        return array_reverse(explode("/", $this->event_type))[0] ?? "";
+    }
+
     public static function cancel(string $uuid, string $reason = "") {
         $response = Calendly::getClient()->request(static::$resource . "/$uuid/cancellation", "POST", [
             "reason" => $reason,
