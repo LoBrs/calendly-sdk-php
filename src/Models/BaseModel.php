@@ -3,6 +3,7 @@
 namespace LoBrs\Calendly\Models;
 
 use LoBrs\Calendly\Calendly;
+use LoBrs\Calendly\Utils\PaginatedList;
 
 abstract class BaseModel
 {
@@ -45,12 +46,21 @@ abstract class BaseModel
     }
 
     /**
-     * @param array $collection
+     * @param array $list
      * @return static[]
      */
-    public static function collection(array $collection): array {
+    public static function collection(array $list): array {
         return array_map(function ($data) {
             return new static($data);
-        }, $collection);
+        }, $list);
+    }
+
+    /**
+     * @param array $response
+     * @return PaginatedList<static>
+     */
+    public static function pagination(array $response): PaginatedList {
+        $response["collection"] = static::collection($response["collection"]);
+        return new PaginatedList($response);
     }
 }

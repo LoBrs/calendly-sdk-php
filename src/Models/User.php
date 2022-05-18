@@ -2,6 +2,7 @@
 
 namespace LoBrs\Calendly\Models;
 
+use LoBrs\Calendly\Utils\PaginatedList;
 use LoBrs\Calendly\Traits\Timeable;
 
 /**
@@ -36,11 +37,11 @@ class User extends BaseModel
 
     /**
      * @param array $options
-     * @return Event[]
+     * @return PaginatedList
      * @throws \Exception
      */
     public function getScheduledEvents(array $options = []) {
-        return Event::getList(array_merge([
+        return Event::paginate(array_merge([
             "organization" => $this->current_organization,
             "user"         => $this->uri,
         ], $options));

@@ -58,8 +58,8 @@ final class CalendlyApi
         return User::get($uuid);
     }
 
-    public function getEventTypes(array $options): array {
-        return EventType::getList($options);
+    public function getEventTypes(array $options): Utils\PaginatedList {
+        return EventType::pagination($options);
     }
 
 }
