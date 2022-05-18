@@ -12,6 +12,7 @@ use LoBrs\Calendly\Traits\Timeable;
  * @property $timezone
  * @property $avatar_url
  * @property $scheduling_url
+ * @property $current_organization
  */
 class User extends BaseModel
 {
@@ -31,5 +32,17 @@ class User extends BaseModel
      */
     public function getSchedulingUrl(): ?string {
         return $this->getField("scheduling_url");
+    }
+
+    /**
+     * @param $options
+     * @return Event[]
+     * @throws \Exception
+     */
+    public function getEvents($options = []) {
+        return Event::getList(array_merge([
+            "organization" => $this->current_organization,
+            "user"         => $this->uri,
+        ], $options));
     }
 }

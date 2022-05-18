@@ -34,6 +34,9 @@ abstract class BaseModel
         if (empty(static::$resource)) {
             throw new \InvalidArgumentException("Resource cannot be found for this model");
         }
+        if (strpos($uuid, "https://") === 0) {
+            $uuid = array_reverse(explode("/", $uuid))[0];
+        }
         $response = Calendly::getClient()->request("/" . static::$resource . "/$uuid");
         if (isset($response["resource"])) {
             return new static($response["resource"]);
