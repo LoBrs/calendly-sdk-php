@@ -11,7 +11,7 @@ class   CalendlyOAuthProvider extends AbstractProvider
 {
 
     public function getBaseAuthorizationUrl() {
-        return 'https://auth.calendly.com/oauth/autorize';
+        return 'https://auth.calendly.com/oauth/authorize';
     }
 
     public function getBaseAccessTokenUrl(array $params) {

@@ -39,7 +39,7 @@ class CalendlyOAuthTest extends TestCase
         $uri = parse_url($url);
 
         $this->assertEquals('auth.calendly.com', $uri['host']);
-        $this->assertEquals('/oauth/autorize', $uri['path']);
+        $this->assertEquals('/oauth/authorize', $uri['path']);
     }
 
     public function testGetBaseAccessTokenUrl() {
