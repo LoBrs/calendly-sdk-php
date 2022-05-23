@@ -5,10 +5,15 @@ namespace LoBrs\Calendly\OAuth2\Provider;
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
+use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Psr\Http\Message\ResponseInterface;
 
-class   CalendlyOAuthProvider extends AbstractProvider
+/**
+ * @method CalendlyUser getResourceOwner(AccessToken $token)
+ */
+class CalendlyOAuthProvider extends AbstractProvider
 {
+    use BearerAuthorizationTrait;
 
     public function getBaseAuthorizationUrl() {
         return 'https://auth.calendly.com/oauth/authorize';
