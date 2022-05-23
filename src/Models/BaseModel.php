@@ -16,7 +16,7 @@ abstract class BaseModel
     }
 
     public function getId(): ?string {
-        return $this->getField('id', array_reverse(explode("/", $this->uri))[0]);
+        return $this->getField('id', array_reverse(explode("/", $this->uri ?? ""))[0]);
     }
 
     public function toArray(): array {
@@ -57,10 +57,11 @@ abstract class BaseModel
 
     /**
      * @param array $response
+     * @param array $options
      * @return PaginatedList<static>
      */
-    public static function pagination(array $response, array $current_options = []): PaginatedList {
+    public static function pagination(array $response, array $options = []): PaginatedList {
         $response["collection"] = static::collection($response["collection"]);
-        return new PaginatedList($response, $current_options, static::class);
+        return new PaginatedList($response, $options, static::class);
     }
 }

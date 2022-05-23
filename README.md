@@ -39,7 +39,7 @@ $result = \Calendly\Models\Event::paginate([
     "user" => $user->uri
 ]);
 
-echo $result->countResults() . "results \n";
+echo $result->countResults() . " results \n";
 echo $result->getNextPageURL();
 
 // Request next page with the same options.
