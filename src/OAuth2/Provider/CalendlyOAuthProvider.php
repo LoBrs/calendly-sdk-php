@@ -45,6 +45,6 @@ class CalendlyOAuthProvider extends AbstractProvider
     }
 
     protected function createResourceOwner(array $response, AccessToken $token) {
-        return new CalendlyUser($response);
+        return new CalendlyUser($response['resource'] ?? []);
     }
 }

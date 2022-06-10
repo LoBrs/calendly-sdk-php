@@ -4,6 +4,7 @@ namespace LoBrs\Calendly\Test;
 
 use \LoBrs\Calendly\OAuth2\Provider\CalendlyOAuthProvider;
 use League\OAuth2\Client\Tool\QueryBuilderTrait;
+use LoBrs\Calendly\OAuth2\Provider\CalendlyUser;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
@@ -86,6 +87,7 @@ class CalendlyOAuthTest extends TestCase
         $token = Mockery::mock('League\OAuth2\Client\Token\AccessToken');
         $user = $this->provider->getResourceOwner($token);
         $this->assertNotNull($user);
+        $this->assertInstanceOf(CalendlyUser::class, $user);
     }
 
 }
