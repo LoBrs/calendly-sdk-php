@@ -44,21 +44,22 @@ final class CalendlyApi
         }
         try {
             $response = $this->client->request($method, $uri, $options);
-            $data = json_decode($response->getBody(), true);
-            if ($response->getStatusCode() > 299) {
-                $message = $data['message'] ?? "Une erreur est survenue";
-                if (isset($data['title'])) {
-                    $exceptionClassname = "LoBrs\\Calendly\\Exceptions\\" . str_replace(' ', '',
-                            ucwords(str_replace(['-', '_'], ' ', $data['title']))) . "Exception";
-                    if (class_exists($exceptionClassname)) {
-                        throw new $exceptionClassname($message);
-                    }
-                }
-
-                throw new ApiErrorException($message);
-            }
         } catch (GuzzleException $e) {
-            throw new InternalServerErrorException();
+            $response = $e->getResponse();
+        }
+
+        $data = json_decode($response->getBody(), true);
+        if ($response->getStatusCode() > 299) {
+            $message = $data['message'] ?? "Une erreur est survenue";
+            if (isset($data['title'])) {
+                $exceptionClassname = "LoBrs\\Calendly\\Exceptions\\" . str_replace(' ', '',
+                        ucwords(str_replace(['-', '_'], ' ', $data['title']))) . "Exception";
+                if (class_exists($exceptionClassname)) {
+                    throw new $exceptionClassname($message, $data['details'] ?? []);
+                }
+            }
+
+            throw new ApiErrorException($message, $data['details'] ?? []);
         }
 
         return $data;
