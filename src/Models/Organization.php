@@ -3,6 +3,8 @@
 namespace LoBrs\Calendly\Models;
 
 use LoBrs\Calendly\Calendly;
+use LoBrs\Calendly\Exceptions\ApiErrorException;
+use LoBrs\Calendly\Exceptions\InvalidArgumentException;
 use LoBrs\Calendly\Traits\Timeable;
 
 /**
@@ -18,7 +20,7 @@ class Organization extends BaseModel
 
     /**
      * @return OrganizationInvitation[]
-     * @throws \Exception
+     * @throws ApiErrorException|InvalidArgumentException
      */
     public function getInvitations() {
         return OrganizationInvitation::getList($this->getId());
@@ -26,7 +28,7 @@ class Organization extends BaseModel
 
     /**
      * @return OrganizationMembership[]
-     * @throws \Exception
+     * @throws ApiErrorException|InvalidArgumentException
      */
     public function getMemberShips() {
         return OrganizationMembership::getList($this->getId());
@@ -37,7 +39,7 @@ class Organization extends BaseModel
      *
      * @param string $email
      * @return ?OrganizationInvitation
-     * @throws \Exception
+     * @throws ApiErrorException|InvalidArgumentException
      */
     public function invite(string $email) {
         $response = Calendly::getClient()->request(static::$resource . "/" . $this->getId() . "/invitations", "POST", [

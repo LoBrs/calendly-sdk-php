@@ -2,6 +2,8 @@
 
 namespace LoBrs\Calendly\Models;
 
+use LoBrs\Calendly\Exceptions\ApiErrorException;
+use LoBrs\Calendly\Exceptions\InvalidArgumentException;
 use LoBrs\Calendly\Traits\Timeable;
 use LoBrs\Calendly\Utils\PaginatedList;
 
@@ -38,7 +40,7 @@ class User extends BaseModel
     /**
      * @param array $options
      * @return PaginatedList
-     * @throws \Exception
+     * @throws ApiErrorException|InvalidArgumentException
      */
     public function getScheduledEvents(array $options = []) {
         return Event::paginate(array_merge([
@@ -50,7 +52,7 @@ class User extends BaseModel
     /**
      * @return Organization|null
      */
-    public function getCurrentOrganization() {
+    public function getCurrentOrganization(): ?Organization {
         if (!empty($this->getField("current_organization"))) {
             return Organization::get($this->current_organization);
         }

@@ -3,6 +3,8 @@
 namespace LoBrs\Calendly\Traits;
 
 use LoBrs\Calendly\Calendly;
+use LoBrs\Calendly\Exceptions\ApiErrorException;
+use LoBrs\Calendly\Exceptions\InvalidArgumentException;
 
 trait ChildListable
 {
@@ -10,7 +12,7 @@ trait ChildListable
      * @param string $parent_uuid
      * @param array $options
      * @return static[]
-     * @throws \Exception
+     * @throws ApiErrorException|InvalidArgumentException
      */
     public static function getList(string $parent_uuid, array $options = []) {
         $response = Calendly::getClient()->request(static::getResourceURI($parent_uuid), "GET", $options);
@@ -20,7 +22,7 @@ trait ChildListable
         return [];
     }
 
-    protected static function getResourceURI(string $parent_uuid) {
+    protected static function getResourceURI(string $parent_uuid): string {
         return static::getParentResource() . "/" . $parent_uuid . "/" . static::$resource;
     }
 

@@ -2,7 +2,7 @@
 
 namespace LoBrs\Calendly\Exceptions;
 
-class MissingCalendlyTokenException extends \Exception
+class MissingCalendlyTokenException extends InvalidArgumentException
 {
 
 }
