@@ -34,4 +34,12 @@ class Invitee extends BaseModel
     static function getParentResource() {
         return Event::$resource;
     }
+
+    public function getEventId(): string {
+        return array_reverse(explode("/", $this->event))[0] ?? "";
+    }
+
+    public function getEvent(): ?Event {
+        return Event::get($this->event);
+    }
 }
