@@ -2,10 +2,15 @@
 
 namespace LoBrs\Calendly;
 
-use LoBrs\Calendly\Models\EventType;
-use LoBrs\Calendly\Models\User;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use LoBrs\Calendly\Exceptions\ApiErrorException;
+use LoBrs\Calendly\Exceptions\InternalServerErrorException;
+use LoBrs\Calendly\Exceptions\InvalidArgumentException;
+use LoBrs\Calendly\Models\EventType;
+use LoBrs\Calendly\Models\Organization;
+use LoBrs\Calendly\Models\User;
 
 final class CalendlyApi
 {
@@ -24,6 +29,9 @@ final class CalendlyApi
         ]);
     }
 
+    /**
+     * @throws ApiErrorException|InvalidArgumentException
+     */
     public function request(string $uri, string $method = "GET", array $params = []) {
         $options[RequestOptions::HEADERS] = [
             "Accept"        => "application/json",
@@ -34,10 +42,23 @@ final class CalendlyApi
         } else {
             $options[RequestOptions::JSON] = $params;
         }
-        $response = $this->client->request($method, $uri, $options);
-        $data = json_decode($response->getBody(), true);
-        if ($response->getStatusCode() > 299) {
-            throw new \Exception($data['message'] ?? "Une erreur est survenue");
+        try {
+            $response = $this->client->request($method, $uri, $options);
+            $data = json_decode($response->getBody(), true);
+            if ($response->getStatusCode() > 299) {
+                $message = $data['message'] ?? "Une erreur est survenue";
+                if (isset($data['title'])) {
+                    $exceptionClassname = "LoBrs\\Calendly\\Exceptions\\" . str_replace(' ', '',
+                            ucwords(str_replace(['-', '_'], ' ', $data['title']))) . "Exception";
+                    if (class_exists($exceptionClassname)) {
+                        throw new $exceptionClassname($message);
+                    }
+                }
+
+                throw new ApiErrorException($message);
+            }
+        } catch (GuzzleException $e) {
+            throw new InternalServerErrorException();
         }
 
         return $data;
@@ -51,10 +72,19 @@ final class CalendlyApi
         return null;
     }
 
-    /**
-     * @throws \Exception
-     */
-    public function getUser(string $uuid): ?User {
+    public function getOrganization(?string $organization_uuid = null): ?Organization {
+        if (empty($organization_uuid)) {
+            return $this->me()->getCurrentOrganization();
+        }
+
+        return Organization::get($organization_uuid);
+    }
+
+    public function getUser(?string $uuid = null): ?User {
+        if (empty($uuid)) {
+            return $this->me();
+        }
+
         return User::get($uuid);
     }
 

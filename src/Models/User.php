@@ -2,8 +2,8 @@
 
 namespace LoBrs\Calendly\Models;
 
-use LoBrs\Calendly\Utils\PaginatedList;
 use LoBrs\Calendly\Traits\Timeable;
+use LoBrs\Calendly\Utils\PaginatedList;
 
 /**
  * @property $uri
@@ -45,5 +45,16 @@ class User extends BaseModel
             "organization" => $this->current_organization,
             "user"         => $this->uri,
         ], $options));
+    }
+
+    /**
+     * @return Organization|null
+     */
+    public function getCurrentOrganization() {
+        if (!empty($this->getField("current_organization"))) {
+            return Organization::get($this->current_organization);
+        }
+
+        return null;
     }
 }
