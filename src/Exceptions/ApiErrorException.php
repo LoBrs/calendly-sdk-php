@@ -6,7 +6,7 @@ use Throwable;
 
 class ApiErrorException extends \Exception
 {
-    private array $details;
+    protected array $details;
 
     public function __construct($message = "", $details = [], Throwable $previous = null) {
         parent::__construct($message, 0, $previous);
