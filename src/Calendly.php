@@ -9,6 +9,7 @@ use LoBrs\Calendly\Exceptions\MissingCalendlyTokenException;
  * @method static Models\User getUser(string $uuid)
  * @method static Models\Organization getOrganization()
  * @method static Models\EventType[] getEventTypes(array $options)
+ * @method static array request(string $uri, string $method = "GET", array $params = [])
  */
 class Calendly
 {

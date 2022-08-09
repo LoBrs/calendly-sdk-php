@@ -8,6 +8,9 @@ use GuzzleHttp\RequestOptions;
 use LoBrs\Calendly\Exceptions\ApiErrorException;
 use LoBrs\Calendly\Exceptions\InternalServerErrorException;
 use LoBrs\Calendly\Exceptions\InvalidArgumentException;
+use LoBrs\Calendly\Exceptions\PermissionDeniedException;
+use LoBrs\Calendly\Exceptions\ResourceNotFoundException;
+use LoBrs\Calendly\Exceptions\UnauthenticatedException;
 use LoBrs\Calendly\Models\EventType;
 use LoBrs\Calendly\Models\Organization;
 use LoBrs\Calendly\Models\User;
@@ -15,18 +18,23 @@ use LoBrs\Calendly\Models\User;
 final class CalendlyApi
 {
     const API_URL = "https://api.calendly.com";
+
     private Client $client;
 
     /**
-     * @var string Token utilisateur Calendly
+     * @var string Calendly `user` or `organization` token
      */
     private string $token;
 
-    public function __construct(string $token) {
+    public function __construct(string $token, ?Client $httpClient = null) {
         $this->token = $token;
-        $this->client = new Client([
-            "base_uri" => self::API_URL,
-        ]);
+        if ($httpClient) {
+            $this->client = $httpClient;
+        } else {
+            $this->client = new Client([
+                "base_uri" => self::API_URL,
+            ]);
+        }
     }
 
     /**
@@ -49,22 +57,42 @@ final class CalendlyApi
         }
 
         $data = json_decode($response->getBody(), true);
-        if ($response->getStatusCode() > 299) {
+        $httpCode = $response->getStatusCode();
+        if ($httpCode > 299) {
             $message = $data['message'] ?? "Une erreur est survenue";
+            $details = $data['details'] ?? [];
             if (isset($data['title'])) {
+                // get exception class from title
                 $exceptionClassname = "LoBrs\\Calendly\\Exceptions\\" . str_replace(' ', '',
                         ucwords(str_replace(['-', '_'], ' ', $data['title']))) . "Exception";
                 if (class_exists($exceptionClassname)) {
-                    throw new $exceptionClassname($message, $data['details'] ?? []);
+                    throw new $exceptionClassname($message, $details);
                 }
             }
 
-            throw new ApiErrorException($message, $data['details'] ?? []);
+            if ($httpCode == 500) {
+                throw new InternalServerErrorException($message, $details);
+            }
+            if ($httpCode == 404) {
+                throw new ResourceNotFoundException($message, $details);
+            }
+            if ($httpCode == 403) {
+                throw new PermissionDeniedException($message, $details);
+            }
+            if ($httpCode == 401) {
+                throw new UnauthenticatedException($message, $details);
+            }
+
+            // Default API error exception
+            throw new ApiErrorException($message, $details);
         }
 
         return $data;
     }
 
+    /**
+     * @throws ApiErrorException|InvalidArgumentException
+     */
     public function me(): ?User {
         $response = $this->request("/users/me");
         if (isset($response["resource"])) {
@@ -73,6 +101,9 @@ final class CalendlyApi
         return null;
     }
 
+    /**
+     * @throws ApiErrorException|InvalidArgumentException
+     */
     public function getOrganization(?string $organization_uuid = null): ?Organization {
         if (empty($organization_uuid)) {
             return $this->me()->getCurrentOrganization();
@@ -81,6 +112,9 @@ final class CalendlyApi
         return Organization::get($organization_uuid);
     }
 
+    /**
+     * @throws ApiErrorException|InvalidArgumentException
+     */
     public function getUser(?string $uuid = null): ?User {
         if (empty($uuid)) {
             return $this->me();
@@ -89,6 +123,9 @@ final class CalendlyApi
         return User::get($uuid);
     }
 
+    /**
+     * @throws ApiErrorException|InvalidArgumentException
+     */
     public function getEventTypes(array $options): Utils\PaginatedList {
         return EventType::paginate($options);
     }
