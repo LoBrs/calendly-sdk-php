@@ -16,6 +16,9 @@ class Calendly
     static private ?CalendlyApi $sdk = null;
     static private string $token = "";
 
+    /**
+     * @throws MissingCalendlyTokenException
+     */
     public static function __callStatic($name, $arguments) {
         return call_user_func_array([self::getClient(), $name], $arguments);
     }
@@ -25,6 +28,9 @@ class Calendly
         return self::getClient();
     }
 
+    /**
+     * @throws MissingCalendlyTokenException
+     */
     public static function getClient(): ?CalendlyApi {
         if (!self::$sdk) {
             if (empty(self::$token)) {

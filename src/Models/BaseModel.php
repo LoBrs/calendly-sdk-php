@@ -3,6 +3,10 @@
 namespace LoBrs\Calendly\Models;
 
 use LoBrs\Calendly\Calendly;
+use LoBrs\Calendly\Exceptions\ApiErrorException;
+use LoBrs\Calendly\Exceptions\InternalServerErrorException;
+use LoBrs\Calendly\Exceptions\InvalidArgumentException;
+use LoBrs\Calendly\Exceptions\MissingCalendlyTokenException;
 use LoBrs\Calendly\Utils\PaginatedList;
 
 abstract class BaseModel
@@ -31,9 +35,13 @@ abstract class BaseModel
         return $this->getField($name);
     }
 
+    /**
+     * @throws ApiErrorException|InvalidArgumentException|InternalServerErrorException
+     * @return static
+     */
     public static function get(string $uuid) {
         if (empty(static::$resource)) {
-            throw new \InvalidArgumentException("Resource cannot be found for this model");
+            throw new InternalServerErrorException("Resource cannot be found for this model");
         }
         if (strpos($uuid, "https://") === 0) {
             $uuid = array_reverse(explode("/", $uuid))[0];

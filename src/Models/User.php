@@ -51,6 +51,7 @@ class User extends BaseModel
 
     /**
      * @return Organization|null
+     * @throws ApiErrorException|InvalidArgumentException
      */
     public function getCurrentOrganization(): ?Organization {
         if (!empty($this->getField("current_organization"))) {

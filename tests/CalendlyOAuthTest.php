@@ -2,7 +2,7 @@
 
 namespace LoBrs\Calendly\Test;
 
-use \LoBrs\Calendly\OAuth2\Provider\CalendlyOAuthProvider;
+use LoBrs\Calendly\OAuth2\Provider\CalendlyOAuthProvider;
 use League\OAuth2\Client\Tool\QueryBuilderTrait;
 use LoBrs\Calendly\OAuth2\Provider\CalendlyUser;
 use Mockery;
