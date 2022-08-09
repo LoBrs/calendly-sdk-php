@@ -29,26 +29,26 @@ class WebhookSignature
      */
     public static function verifySignature(string $payload, string $header, string $secret, int $tolerance): WebhookSignature {
 
-        $signature = new WebhookSignature($header);
+        $sig = new WebhookSignature($header);
 
-        if (empty($signatures)) {
+        if (empty($sig->signature)) {
             throw new WebhookSignatureException("No valid signature found");
         }
-        if (-1 === $signature->signature_timestamp || empty($signature->signature_timestamp)) {
+        if (-1 === $sig->signature_timestamp || empty($sig->signature_timestamp)) {
             throw new WebhookExpiredResponseException('Signature header timestamp not found');
         }
 
-        $expected_signature = $signature->computeSignature($payload, $secret);
+        $expected_signature = $sig->computeSignature($payload, $secret);
 
-        if ($signatures !== $expected_signature) {
+        if ($sig->signature !== $expected_signature) {
             throw new WebhookSignatureException('Invalid signature');
         }
 
-        if ($signature->signature_timestamp < time() - $tolerance) {
+        if ($sig->signature_timestamp < time() - $tolerance) {
             throw new WebhookExpiredResponseException('Invalid Signature. The signature\'s timestamp is outside of the tolerance zone.');
         }
 
-        return $signature;
+        return $sig;
     }
 
     /**
