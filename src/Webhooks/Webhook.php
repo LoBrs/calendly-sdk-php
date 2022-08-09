@@ -2,6 +2,8 @@
 
 namespace LoBrs\Calendly\Webhooks;
 
+use LoBrs\Calendly\Exceptions\ApiErrorException;
+use LoBrs\Calendly\Exceptions\InvalidArgumentException;
 use LoBrs\Calendly\Exceptions\WebhookExpiredResponseException;
 use LoBrs\Calendly\Exceptions\WebhookSignatureException;
 use LoBrs\Calendly\Models\BaseModel;
@@ -9,6 +11,8 @@ use UnexpectedValueException;
 
 class Webhook
 {
+    const SCOPE_USER = "user";
+    const SCOPE_ORGANIZATION = "organization";
 
     /**
      * Create a Webhook Subscription for an Organization or User.
@@ -18,9 +22,11 @@ class Webhook
      * @param string $uuid User or Organization uuid
      * @param ?string $webhook_signing_key Optional secret key shared between your application and Calendly
      * @return BaseModel|null
+     * @throws ApiErrorException
+     * @throws InvalidArgumentException
      */
     public static function subscribe(string $url, array $events, string $uuid, ?string $webhook_signing_key = null): ?BaseModel {
-        $scope = strpos("/organizations/", $uuid) !== false ? "organization" : "user";
+        $scope = strpos($uuid, "organization") !== false ? self::SCOPE_ORGANIZATION : self::SCOPE_USER;
         $options = [
             "url"    => $url,
             "events" => $events,
