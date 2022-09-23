@@ -2,6 +2,8 @@
 
 namespace LoBrs\Calendly\Models;
 
+use LoBrs\Calendly\Exceptions\ApiErrorException;
+use LoBrs\Calendly\Exceptions\InvalidArgumentException;
 use LoBrs\Calendly\Traits\Listable;
 use LoBrs\Calendly\Traits\Timeable;
 
@@ -56,12 +58,11 @@ class EventType extends BaseModel
     }
 
     /**
-     * Creates a single-use scheduling link.
+     * Creates a single-use scheduling link based on the Event Type.
      *
-     * @param int $maxEventCount
+     * @param int $maxEventCount The max number of events that can be scheduled using this scheduling link.
      * @return BaseModel|null
-     * @throws \LoBrs\Calendly\Exceptions\ApiErrorException
-     * @throws \LoBrs\Calendly\Exceptions\InvalidArgumentException
+     * @throws ApiErrorException|InvalidArgumentException
      */
     public function createSchedulingLink(int $maxEventCount = 1): ?BaseModel {
         return SchedulingLink::create([

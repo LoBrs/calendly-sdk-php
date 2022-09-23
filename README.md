@@ -1,6 +1,6 @@
 # Calendly PHP SDK
 
-Simple PHP implementation of [Calendly API](https://developer.calendly.com/api-docs).
+PHP implementation of [Calendly API](https://developer.calendly.com/api-docs) (v2).
 
 
 ### Installation
