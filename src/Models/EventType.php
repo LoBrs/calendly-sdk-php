@@ -40,7 +40,34 @@ class EventType extends BaseModel
         return $this->getField($html ? "description_html" : "description_plain", "");
     }
 
-    public function getProfile(): Profile {
-        return new Profile((array)$this->getField("profile"));
+    /**
+     * The publicly visible profile of a User or a Team that's associated with the Event Type.
+     *
+     * @return ?Profile
+     */
+    public function getProfile(): ?Profile {
+        $profile = $this->getField("profile");
+        if (empty($profile)) {
+            // Some Event Types don't have profiles
+            return null;
+        }
+
+        return new Profile((array)$profile);
+    }
+
+    /**
+     * Creates a single-use scheduling link.
+     *
+     * @param int $maxEventCount
+     * @return BaseModel|null
+     * @throws \LoBrs\Calendly\Exceptions\ApiErrorException
+     * @throws \LoBrs\Calendly\Exceptions\InvalidArgumentException
+     */
+    public function createSchedulingLink(int $maxEventCount = 1): ?BaseModel {
+        return SchedulingLink::create([
+            "max_event_count" => $maxEventCount,
+            "owner"           => $this->getId(),
+            "owner_type"      => "EventType",
+        ]);
     }
 }

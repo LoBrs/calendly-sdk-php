@@ -2,9 +2,8 @@
 
 namespace LoBrs\Calendly\Models;
 
-use LoBrs\Calendly\Calendly;
-use LoBrs\Calendly\Traits\ChildListable;
 use LoBrs\Calendly\Traits\Deletable;
+use LoBrs\Calendly\Traits\NestedRelationListable;
 use LoBrs\Calendly\Traits\Timeable;
 
 /**
@@ -12,7 +11,7 @@ use LoBrs\Calendly\Traits\Timeable;
  */
 class OrganizationMembership extends BaseModel
 {
-    use ChildListable;
+    use NestedRelationListable;
     use Timeable;
     use Deletable;
 

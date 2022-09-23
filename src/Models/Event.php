@@ -7,6 +7,8 @@ use LoBrs\Calendly\Traits\Listable;
 use LoBrs\Calendly\Traits\Timeable;
 
 /**
+ * Information about a scheduled meeting
+ *
  * @property $uri
  * @property $name
  * @property $status
@@ -47,7 +49,7 @@ class Event extends BaseModel
     }
 
     public function getEventTypeId(): string {
-        return array_reverse(explode("/", $this->event_type))[0] ?? "";
+        return self::getIdFromUri($this->event_type);
     }
 
     public static function cancel(string $uuid, string $reason = "") {

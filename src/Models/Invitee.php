@@ -2,7 +2,7 @@
 
 namespace LoBrs\Calendly\Models;
 
-use LoBrs\Calendly\Traits\ChildListable;
+use LoBrs\Calendly\Traits\NestedRelationListable;
 use LoBrs\Calendly\Traits\Timeable;
 
 /**
@@ -28,7 +28,7 @@ class Invitee extends BaseModel
 {
     public static string $resource = "invitees";
 
-    use ChildListable;
+    use NestedRelationListable;
     use Timeable;
 
     static function getParentResource() {
@@ -36,7 +36,7 @@ class Invitee extends BaseModel
     }
 
     public function getEventId(): string {
-        return array_reverse(explode("/", $this->event))[0] ?? "";
+        return self::getIdFromUri($this->event);
     }
 
     public function getEvent(): ?Event {

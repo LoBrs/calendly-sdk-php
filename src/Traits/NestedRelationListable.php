@@ -6,9 +6,11 @@ use LoBrs\Calendly\Calendly;
 use LoBrs\Calendly\Exceptions\ApiErrorException;
 use LoBrs\Calendly\Exceptions\InvalidArgumentException;
 
-trait ChildListable
+trait NestedRelationListable
 {
     /**
+     * Returns models collection based on the parent resource.
+     *
      * @param string $parent_uuid
      * @param array $options
      * @return static[]
@@ -22,6 +24,12 @@ trait ChildListable
         return [];
     }
 
+    /**
+     * URI to use in the API call.
+     *
+     * @param string $parent_uuid
+     * @return string
+     */
     protected static function getResourceURI(string $parent_uuid): string {
         return static::getParentResource() . "/" . $parent_uuid . "/" . static::$resource;
     }

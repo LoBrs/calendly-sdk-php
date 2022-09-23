@@ -5,7 +5,7 @@ namespace LoBrs\Calendly\Models;
 use LoBrs\Calendly\Calendly;
 use LoBrs\Calendly\Exceptions\ApiErrorException;
 use LoBrs\Calendly\Exceptions\InvitationAlreadyAcceptedException;
-use LoBrs\Calendly\Traits\ChildListable;
+use LoBrs\Calendly\Traits\NestedRelationListable;
 use LoBrs\Calendly\Traits\Timeable;
 
 /**
@@ -18,7 +18,7 @@ use LoBrs\Calendly\Traits\Timeable;
  */
 class OrganizationInvitation extends BaseModel
 {
-    use ChildListable;
+    use NestedRelationListable;
     use Timeable;
 
     public static string $resource = "invitations";
