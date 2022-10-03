@@ -48,13 +48,35 @@ $next_page_results = $result->next();
 
 Refer to the [Calendly API documentation](https://developer.calendly.com/api-docs) to find requests options.
 
+#### Currently supported models
+
+| Models                 | Get uuid | Paginate | Create | Delete |
+|------------------------|----------|----------|--------|--------|
+| Event                  | ✓        | ✓        |        |        |
+| EventType              | ✓        | ✓        |        |        |
+| Guest                  | ✓        |          |        |        |
+| Invitee                | ✓        |          |        |        |
+| Organization           | ✓        |          |        |        |
+| OrganizationInvitation | ✓        |          |        |        |
+| OrganizationMembership | ✓        |          |        | ✓      |
+| Profile                | ✓        |          |        |        |
+| RoutingForm            | ✓        | ✓        |        |        |
+| RoutingFormSubmission  | ✓        | ✓        |        |        |
+| SchedulingLink         | ✓        |          | ✓      |        |
+| User                   | ✓        |          |        |        |
+| WebhookSubscription    | ✓        | ✓        | ✓      | ✓      |
+
+#### Direct API request usage
+
+You can directly call the API using `Calendly::request($uri, "GET", $params)`, which returns the body of the response.
+
 ### Webhooks
 
 You can use `WebhookSubscription` Model directly to manage your Webhooks methods `getList`, `get`, `create` and `delete`.
 
 #### Webhook subscription
 
-We provide a simple `subscribe` method to add a new webhook. 
+We provide the `subscribe` helper method to add a new webhook.
 The `$uuid` parameter referencing a user or organization uuid.
 
 ```
@@ -78,7 +100,7 @@ try {
 
 ### OAuth
 
-Uses [ThePhpLeague OAuth2 Client](https://github.com/thephpleague/oauth2-client)
+This package comes with an OAuth2 CLient, using [ThePhpLeague OAuth2 Client](https://github.com/thephpleague/oauth2-client)
 
 #### Usage flow
 
