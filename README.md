@@ -48,6 +48,7 @@ $next_page_results = $result->next();
 
 Refer to the [Calendly API documentation](https://developer.calendly.com/api-docs) to find requests options.
 
+
 #### Currently supported models
 
 | Models                 | Get uuid | Paginate | Create | Delete |
@@ -66,9 +67,11 @@ Refer to the [Calendly API documentation](https://developer.calendly.com/api-doc
 | User                   | ✓        |          |        |        |
 | WebhookSubscription    | ✓        | ✓        | ✓      | ✓      |
 
+
 #### Direct API request usage
 
 You can directly call the API using `Calendly::request($uri, "GET", $params)`, which returns the body of the response.
+
 
 ### Webhooks
 
