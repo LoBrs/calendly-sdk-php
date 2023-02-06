@@ -2,6 +2,7 @@
 
 namespace LoBrs\Calendly;
 
+use GuzzleHttp\Client;
 use LoBrs\Calendly\Exceptions\MissingCalendlyTokenException;
 
 /**
@@ -14,6 +15,7 @@ use LoBrs\Calendly\Exceptions\MissingCalendlyTokenException;
 class Calendly
 {
     static private ?CalendlyApi $sdk = null;
+    static private ?Client $httpClient = null;
     static private string $token = "";
 
     /**
@@ -23,9 +25,12 @@ class Calendly
         return call_user_func_array([self::getClient(), $name], $arguments);
     }
 
-    public static function setToken(string $token): ?CalendlyApi {
+    public static function setToken(string $token) {
         self::$token = $token;
-        return self::getClient();
+    }
+
+    public static function setHttpClient(Client $httpClient) {
+        static::$httpClient = $httpClient;
     }
 
     /**
@@ -36,7 +41,7 @@ class Calendly
             if (empty(self::$token)) {
                 throw new MissingCalendlyTokenException("Calendly token must be set");
             }
-            self::$sdk = new CalendlyApi(self::$token);
+            self::$sdk = new CalendlyApi(self::$token, self::$httpClient);
         }
 
         return self::$sdk;
