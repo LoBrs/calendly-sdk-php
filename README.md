@@ -11,14 +11,14 @@ composer require lobrs/calendly-sdk-php
 
 ### Usage
 
-```
+```php
 \LoBrs\Calendly\Calendly::setToken($token);
 $currentUser = \LoBrs\Calendly\Calendly::me();
 ```
 
 #### Get user from UUID
 
-```
+```php
 $user = \LoBrs\Calendly\Models\User::get($uuid);
 ```
 
@@ -26,7 +26,7 @@ $user = \LoBrs\Calendly\Models\User::get($uuid);
 
 Returns an array of objects from the model class.
 
-```
+```php
 // List scheduled events from a user
 $scheduled_events = \Calendly\Models\Event::getList([
     "user" => $user->uri
@@ -34,7 +34,7 @@ $scheduled_events = \Calendly\Models\Event::getList([
 ```
 
 You can also use `paginate($options)` method, returning a `PaginatedList`.
-```
+```php
 $result = \Calendly\Models\Event::paginate([
     "user" => $user->uri
 ]);
@@ -82,7 +82,7 @@ You can use `WebhookSubscription` Model directly to manage your Webhooks methods
 We provide the `subscribe` helper method to add a new webhook.
 The `$uuid` parameter referencing a user or organization uuid.
 
-```
+```php
 \LoBrs\Calendly\Webhooks\Webhook::subscribe("https://example.com/my-webhook", [
     'invitee.created'
 ], $uuid, 'my-webhook-secret-key');
@@ -93,7 +93,7 @@ by providing the webhook secret key parameter.
 
 #### Webhook payload example
 
-```
+```php
 $payload = @file_get_contents('php://input');
 $header = $_SERVER['HTTP_CALENDLY_WEBHOOK_SIGNATURE'];
 try {
@@ -107,7 +107,7 @@ This package comes with an OAuth2 CLient, using [ThePhpLeague OAuth2 Client](htt
 
 #### Usage flow
 
-```
+```php
 
 $provider = new CalendlyOAuthProvider([
     "clientId"     => env('CALENDLY_CLIENT'),
