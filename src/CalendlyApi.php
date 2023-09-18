@@ -5,7 +5,9 @@ namespace LoBrs\Calendly;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
+use Psr\Http\Message\ResponseInterface;
 use LoBrs\Calendly\Exceptions\ApiErrorException;
+use LoBrs\Calendly\Exceptions\ApiRateLimitExceededException;
 use LoBrs\Calendly\Exceptions\InternalServerErrorException;
 use LoBrs\Calendly\Exceptions\InvalidArgumentException;
 use LoBrs\Calendly\Exceptions\PermissionDeniedException;
@@ -20,6 +22,7 @@ final class CalendlyApi
     const API_URL = "https://api.calendly.com";
 
     private Client $client;
+    private ResponseInterface $response;
 
     /**
      * @var string Calendly `user` or `organization` token
@@ -51,15 +54,15 @@ final class CalendlyApi
             $options[RequestOptions::JSON] = $params;
         }
         try {
-            $response = $this->client->request($method, $uri, $options);
+            $this->response = $this->client->request($method, $uri, $options);
         } catch (GuzzleException $e) {
-            $response = $e->getResponse();
+            $this->response = $e->getResponse();
         }
 
-        $data = json_decode($response->getBody(), true);
-        $httpCode = $response->getStatusCode();
+        $data = json_decode($this->response->getBody(), true);
+        $httpCode = $this->response->getStatusCode();
         if ($httpCode > 299) {
-            $message = $data['message'] ?? "Une erreur est survenue";
+            $message = $data['message'] ?? "An error occurred";
             $details = $data['details'] ?? [];
             if (isset($data['title'])) {
                 // get exception class from title
@@ -81,6 +84,9 @@ final class CalendlyApi
             }
             if ($httpCode == 401) {
                 throw new UnauthenticatedException($message, $details);
+            }
+            if ($httpCode == 429) {
+                throw new ApiRateLimitExceededException($message, $details);
             }
 
             // Default API error exception
@@ -130,4 +136,7 @@ final class CalendlyApi
         return EventType::paginate($options);
     }
 
+    public function getLastResponse(): ResponseInterface {
+        return $this->response;
+    }
 }
