@@ -2,6 +2,7 @@
 
 namespace LoBrs\Calendly\Test;
 
+use GuzzleHttp\Psr7\Utils;
 use LoBrs\Calendly\OAuth2\Provider\CalendlyOAuthProvider;
 use League\OAuth2\Client\Tool\QueryBuilderTrait;
 use LoBrs\Calendly\OAuth2\Provider\CalendlyUser;
@@ -66,8 +67,10 @@ class CalendlyOAuthTest extends TestCase
     }
 
     public function testGetAccessToken() {
+        $body = Utils::streamFor(json_encode($this->mockTokenResponse()));
+
         $response = Mockery::mock('Psr\Http\Message\ResponseInterface');
-        $response->shouldReceive('getBody')->andReturn(json_encode($this->mockTokenResponse()));
+        $response->shouldReceive('getBody')->andReturn($body);
         $response->shouldReceive('getHeader')->andReturn(['Content-Type' => 'application/json']);
         $response->shouldReceive('getStatusCode')->andReturn(200);
 
