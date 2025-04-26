@@ -24,6 +24,10 @@ use LoBrs\Calendly\Traits\Timeable;
  * @property $secret
  * @property $booking_method
  * @property $deleted_at
+ * @property $admin_managed
+ * @property $locations
+ * @property $position
+ * @property $locale
  */
 class EventType extends BaseModel
 {
