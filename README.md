@@ -55,7 +55,6 @@ Refer to the [Calendly API documentation](https://developer.calendly.com/api-doc
 |------------------------|----------|----------|--------|--------|
 | Event                  | ✓        | ✓        |        |        |
 | EventType              | ✓        | ✓        |        |        |
-| EventTypeAvailableTime | ✓        |          |        |        |
 | Guest                  | ✓        |          |        |        |
 | Invitee                | ✓        |          |        |        |
 | Organization           | ✓        |          |        |        |
