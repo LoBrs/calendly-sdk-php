@@ -14,6 +14,7 @@ use LoBrs\Calendly\Traits\Timeable;
  * @property $slug
  * @property $scheduling_url
  * @property $duration
+ * @property $duration_options
  * @property $kind
  * @property $pooling_type
  * @property $type
@@ -23,6 +24,7 @@ use LoBrs\Calendly\Traits\Timeable;
  * @property $description_html
  * @property $secret
  * @property $booking_method
+ * @property $custom_questions
  * @property $deleted_at
  * @property $admin_managed
  * @property $locations
