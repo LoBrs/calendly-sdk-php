@@ -20,12 +20,28 @@ class UserBusyTime extends BaseModel
 
     use Listable;
 
+    public function getStartTime(): \DateTimeImmutable {
+        return new \DateTimeImmutable($this->start_time, new \DateTimeZone('UTC'));
+    }
+
+    public function getEndTime(): \DateTimeImmutable {
+        return new \DateTimeImmutable($this->end_time, new \DateTimeZone('UTC'));
+    }
+
+    public function getBufferedStartTime(): \DateTimeImmutable {
+        return new \DateTimeImmutable($this->buffered_start_time, new \DateTimeZone('UTC'));
+    }
+
+    public function getBufferedEndTime(): \DateTimeImmutable {
+        return new \DateTimeImmutable($this->buffered_end_time, new \DateTimeZone('UTC'));
+    }
+
     /**
      * @return Event|null
      * @throws ApiErrorException|InvalidArgumentException
      */
     public function getEvent(): ?Event {
-        $event = $this->getField("event");
+        $event = $this->getField('event');
         if (empty($event) || empty($event['uri'])) {
             return null;
         }
