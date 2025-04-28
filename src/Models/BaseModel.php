@@ -39,7 +39,7 @@ abstract class BaseModel
     /**
      * Get resource model from uuid.
      *
-     * @return static
+     * @return static|null
      * @throws ApiErrorException|InvalidArgumentException|InternalServerErrorException
      */
     public static function get(string $uuid) {

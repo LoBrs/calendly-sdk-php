@@ -55,6 +55,7 @@ Refer to the [Calendly API documentation](https://developer.calendly.com/api-doc
 |------------------------|----------|----------|--------|--------|
 | Event                  | ✓        | ✓        |        |        |
 | EventType              | ✓        | ✓        |        |        |
+| EventTypeAvailableTime | ✓        |          |        |        |
 | Guest                  | ✓        |          |        |        |
 | Invitee                | ✓        |          |        |        |
 | Organization           | ✓        |          |        |        |
@@ -88,7 +89,7 @@ The `$uuid` parameter referencing a user or organization uuid.
 ], $uuid, 'my-webhook-secret-key');
 ```
 
-To improve security, you can [sign your webhooks](https://developer.calendly.com/api-docs/ZG9jOjM2MzE2MDM4-webhook-signatures) 
+To improve security, you can [sign your webhooks](https://developer.calendly.com/api-docs/ZG9jOjM2MzE2MDM4-webhook-signatures)
 by providing the webhook secret key parameter.
 
 #### Webhook payload example
