@@ -31,6 +31,12 @@ Returns an array of objects from the model class.
 $scheduled_events = \Calendly\Models\Event::getList([
     "user" => $user->uri
 ]);
+// List busy times from a user
+$busy_times = \Calendly\Models\UserBusyTime::getList([
+    "user"          => $user->uri,
+    "start_time"    => date(DateTime::ATOM, strtotime("+1 minute")),
+    "end_time"      => date(DateTime::ATOM, strtotime("+7 days")),
+]);
 ```
 
 You can also use `paginate($options)` method, returning a `PaginatedList`.
@@ -66,6 +72,7 @@ Refer to the [Calendly API documentation](https://developer.calendly.com/api-doc
 | RoutingFormSubmission  | ✓        | ✓        |        |        |
 | SchedulingLink         | ✓        |          | ✓      |        |
 | User                   | ✓        |          |        |        |
+| UserBusyTime           | ✓        |          |        |        |
 | WebhookSubscription    | ✓        | ✓        | ✓      | ✓      |
 
 
