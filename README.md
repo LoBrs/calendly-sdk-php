@@ -57,23 +57,24 @@ Refer to the [Calendly API documentation](https://developer.calendly.com/api-doc
 
 #### Currently supported models
 
-| Models                 | Get uuid | Paginate | Create | Delete |
-|------------------------|----------|----------|--------|--------|
-| Event                  | ✓        | ✓        |        |        |
-| EventType              | ✓        | ✓        |        |        |
-| EventTypeAvailableTime | ✓        |          |        |        |
-| Guest                  | ✓        |          |        |        |
-| Invitee                | ✓        |          |        |        |
-| Organization           | ✓        |          |        |        |
-| OrganizationInvitation | ✓        |          |        |        |
-| OrganizationMembership | ✓        |          |        | ✓      |
-| Profile                | ✓        |          |        |        |
-| RoutingForm            | ✓        | ✓        |        |        |
-| RoutingFormSubmission  | ✓        | ✓        |        |        |
-| SchedulingLink         | ✓        |          | ✓      |        |
-| User                   | ✓        |          |        |        |
-| UserBusyTime           | ✓        |          |        |        |
-| WebhookSubscription    | ✓        | ✓        | ✓      | ✓      |
+| Models                        | Get uuid | Paginate | Create | Delete |
+|-------------------------------|----------|----------|--------|--------|
+| Event                         | ✓        | ✓        |        |        |
+| EventType                     | ✓        | ✓        |        |        |
+| EventTypeAvailableTime        | ✓        |          |        |        |
+| Guest                         | ✓        |          |        |        |
+| Invitee                       | ✓        |          |        |        |
+| Organization                  | ✓        |          |        |        |
+| OrganizationInvitation        | ✓        |          |        |        |
+| OrganizationMembership        | ✓        |          |        | ✓      |
+| Profile                       | ✓        |          |        |        |
+| RoutingForm                   | ✓        | ✓        |        |        |
+| RoutingFormSubmission         | ✓        | ✓        |        |        |
+| SchedulingLink                | ✓        |          | ✓      |        |
+| User                          | ✓        |          |        |        |
+| UserAvailabilitySchedule      | ✓        |          |        |        |
+| UserBusyTime                  | ✓        |          |        |        |
+| WebhookSubscription           | ✓        | ✓        | ✓      | ✓      |
 
 
 #### Direct API request usage
