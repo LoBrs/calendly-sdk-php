@@ -7,6 +7,7 @@ use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use LoBrs\Calendly\Calendly;
+use LoBrs\Calendly\Models\IntrospectToken;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -26,6 +27,10 @@ class CalendlyOAuthProvider extends AbstractProvider
 
     public function getRevokeTokenUrl(): string {
         return 'https://auth.calendly.com/oauth/revoke';
+    }
+
+    public function getIntrospectTokenUrl(): string {
+        return 'https://auth.calendly.com/oauth/introspect';
     }
 
     public function getResourceOwnerDetailsUrl(AccessToken $token) {
@@ -64,6 +69,23 @@ class CalendlyOAuthProvider extends AbstractProvider
         $response = Calendly::request($this->getRevokeTokenUrl(), "POST", $options);
 
         return is_array($response);
+    }
+
+    /**
+     * Use this endpoint to introspect an access/refresh token.
+     *
+     * @param string $token The access/refresh token provided by Calendly
+     * @return IntrospectToken|null
+     */
+    public function introspectToken(string $token): ?IntrospectToken {
+        $options = [
+            'client_id'         => $this->clientId,
+            'client_secret'     => $this->clientSecret,
+            'token'             => $token,
+        ];
+        $response = Calendly::request($this->getIntrospectTokenUrl(), "POST", $options);
+
+        return empty($response) ? null : new IntrospectToken($response);
     }
 
     protected function createResourceOwner(array $response, AccessToken $token) {
