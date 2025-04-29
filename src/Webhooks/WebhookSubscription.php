@@ -31,6 +31,8 @@ class WebhookSubscription extends BaseModel
 
     const EVENT_INVITEE_CREATED = "invitee.created";
     const EVENT_INVITEE_CANCELED = "invitee.canceled";
+    const EVENT_INVITEE_NO_SHOW_CREATED = "invitee_no_show.created";
+    const EVENT_INVITEE_NO_SHOW_DELETED = "invitee_no_show.deleted";
     const EVENT_ROUTING_FORM_SUBMISSION_CREATED = "routing_form_submission.created";
 
     use Listable;
