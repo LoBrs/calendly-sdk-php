@@ -2,6 +2,8 @@
 
 namespace LoBrs\Calendly\Models;
 
+use DateTime;
+use DateTimeZone;
 use LoBrs\Calendly\Exceptions\ApiErrorException;
 use LoBrs\Calendly\Exceptions\InvalidArgumentException;
 use LoBrs\Calendly\Traits\Listable;
@@ -20,20 +22,32 @@ class UserBusyTime extends BaseModel
 
     use Listable;
 
-    public function getStartTime(): \DateTimeImmutable {
-        return new \DateTimeImmutable($this->start_time, new \DateTimeZone('UTC'));
+    /**
+     * @return DateTime The start time of the scheduled event in UTC time
+     */
+    public function getStartTime(): DateTime {
+        return new DateTime($this->start_time, new DateTimeZone('UTC'));
     }
 
-    public function getEndTime(): \DateTimeImmutable {
-        return new \DateTimeImmutable($this->end_time, new \DateTimeZone('UTC'));
+    /**
+     * @return DateTime The end time of the scheduled event in UTC time
+     */
+    public function getEndTime(): DateTime {
+        return new DateTime($this->end_time, new DateTimeZone('UTC'));
     }
 
-    public function getBufferedStartTime(): \DateTimeImmutable {
-        return new \DateTimeImmutable($this->buffered_start_time, new \DateTimeZone('UTC'));
+    /**
+     * @return DateTime The start time of the calendly event, as calculated by any "before" buffer set by the user in UTC time
+     */
+    public function getBufferedStartTime(): DateTime {
+        return new DateTime($this->buffered_start_time, new DateTimeZone('UTC'));
     }
 
-    public function getBufferedEndTime(): \DateTimeImmutable {
-        return new \DateTimeImmutable($this->buffered_end_time, new \DateTimeZone('UTC'));
+    /**
+     * @return DateTime The end time of the calendly event, as calculated by any "after" buffer set by the user in UTC time
+     */
+    public function getBufferedEndTime(): DateTime {
+        return new DateTime($this->buffered_end_time, new DateTimeZone('UTC'));
     }
 
     /**
@@ -47,4 +61,5 @@ class UserBusyTime extends BaseModel
         }
         return Event::get($event['uri']);
     }
+
 }
