@@ -89,12 +89,17 @@ You can use `WebhookSubscription` Model directly to manage your Webhooks methods
 #### Webhook subscription
 
 We provide the `subscribe` helper method to add a new webhook.
-The `$uuid` parameter referencing a user or organization uuid.
+
+The 3rd parameter can be a `$uuid` referencing a user or organization uuid or an array of options.
 
 ```php
 \LoBrs\Calendly\Webhooks\Webhook::subscribe("https://example.com/my-webhook", [
     'invitee.created'
-], $uuid, 'my-webhook-secret-key');
+], [
+    'user' => 'user_abc123',
+    'organization' => 'organization_abc123',
+    'scope' => 'organization',
+], 'my-webhook-secret-key');
 ```
 
 To improve security, you can [sign your webhooks](https://developer.calendly.com/api-docs/ZG9jOjM2MzE2MDM4-webhook-signatures)
