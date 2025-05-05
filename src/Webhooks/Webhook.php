@@ -19,20 +19,26 @@ class Webhook
      *
      * @param string $url The URL where you want to receive POST requests for events you are subscribed to.
      * @param array $events List of user events to subscribe to (invitee.created, invitee.canceled).
-     * @param string $uuid User or Organization uuid
+     * @param string|array $params UUID of the user/organization or a complete array of parameters for the webhook subscription.
      * @param ?string $webhook_signing_key Optional secret key shared between your application and Calendly
      * @return BaseModel|null
      * @throws ApiErrorException
      * @throws InvalidArgumentException
      */
-    public static function subscribe(string $url, array $events, string $uuid, ?string $webhook_signing_key = null): ?BaseModel {
-        $scope = strpos($uuid, "organization") !== false ? self::SCOPE_ORGANIZATION : self::SCOPE_USER;
+    public static function subscribe(string $url, array $events, $params, ?string $webhook_signing_key = null): ?BaseModel {
         $options = [
             "url"    => $url,
             "events" => $events,
-            "scope"  => $scope,
-            $scope   => $uuid,
         ];
+        if (is_string($params)) {
+            $scope = strpos($params, "organization") !== false ? self::SCOPE_ORGANIZATION : self::SCOPE_USER;
+            $params = [
+                "scope"  => $scope,
+                $scope   => $params,
+            ];
+        }
+
+        $options = array_merge($options, $params);
 
         if (!empty($webhook_signing_key)) {
             $options['signing_key'] = $webhook_signing_key;
